@@ -33,13 +33,13 @@ public class OfferRequestService {
         return offerRequestRepository.save(existing);
     }
 
-    // Find single offer request or throw your custom error
+    // Find single offer request
     public OfferRequest findOfferRequestById(Long id) {
         return offerRequestRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Tilbudsforespørgsel ikke fundet med id " + id));
     }
 
-    // Return all offer requests (useful for admin panel)
+    // Return all offer requests
     public List<OfferRequest> findAllOfferRequests() {
         return offerRequestRepository.findAll();
     }
