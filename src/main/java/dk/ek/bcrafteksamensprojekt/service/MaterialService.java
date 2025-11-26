@@ -33,12 +33,25 @@ public class MaterialService {
         return materialRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("Materiale ikke fundet med id "+ id));
     }
+    //Changed method to include "whole-word" matches i.e. Plywood won't be found under wood and "skruetrækker" won't be found under "skrue"
+    public List<Material> findMaterialsByName(String name) {
+        String search = name.toLowerCase();
 
-    public List<Material> findMaterialsByName(String name){
-        return materialRepository.findAll().stream().
-                filter(m -> m.getName().contains(name.toLowerCase()))
+        return materialRepository.findAll().stream()
+                .filter(m -> {
+                    if (m.getName() == null) return false;
+                    //this "//s+" regex split words from 1 word "oak wood" in to "oak" and "wood"
+                    String[] words = m.getName().toLowerCase().split("\\s+");
+                    for (String w : words) {
+                        if (w.equals(search)) {
+                            return true;
+                        }
+                    }
+                    return false;
+                })
                 .collect(Collectors.toList());
     }
+
 
     public void deleteMaterialById(Long id){
         Material material = materialRepository.findById(id).
