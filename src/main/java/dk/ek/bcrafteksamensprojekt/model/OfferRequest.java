@@ -31,4 +31,7 @@ public class OfferRequest {
     }
 
     public OfferRequest(){}
+
+    public OfferRequest(String martin, String due, String number, String mail, String s) {
+    }
 }

@@ -36,20 +36,13 @@ public class InitData implements CommandLineRunner {
 
 
         // --- MATERIALS ---
-        Material walnut = new Material();
-        walnut.setName("Black Walnut Hardwood");
-        walnut.setPricePerUnit(975.0);
-        walnut.setUnit("m²");
+        Material walnut = new Material(1L, "Black Walnut Hardwood", 975.0,"m2");
 
-        Material spruce = new Material();
-        spruce.setName("Spruce Timber");
-        spruce.setPricePerUnit(280.0);
-        spruce.setUnit("m");
 
-        Material plywood12 = new Material();
-        plywood12.setName("12mm Birch Plywood");
-        plywood12.setPricePerUnit(190.0);
-        plywood12.setUnit("m²");
+        Material spruce = new Material(2L, "Spruce Timber", 280.0,"m");
+
+        Material plywood12 = new Material(3L, "Plywood 12", 1200.0,"m");
+
 
         materialService.createMaterial(walnut);
         materialService.createMaterial(spruce);
@@ -57,73 +50,71 @@ public class InitData implements CommandLineRunner {
 
 
         // --- CUSTOMERS ---
-        Customer c1 = new Customer();
-        c1.setFirstName("Henrik");
-        c1.setLastName("Poulsen");
-        c1.setPhoneNumber("41223344");
-        c1.setEmail("henrik.poulsen@example.com");
-        c1.setAddress("Hasselvej 42");
-        c1.setZipCode("7100");
-        c1.setCity("Vejle");
+        Customer c1 = new Customer(1L,"Henrik", "poulsen", "421123123", "Henrik.poulasd@gmail.com", "hasselvej 42", "7100", "Vejle");
 
-        Customer c2 = new Customer();
-        c2.setFirstName("Camilla");
-        c2.setLastName("Thomsen");
-        c2.setPhoneNumber("50554433");
-        c2.setEmail("camilla.t@example.com");
-        c2.setAddress("Kastanievej 9");
-        c2.setZipCode("5000");
-        c2.setCity("Odense");
+
+        Customer c2 = new Customer(2L,"Camilla", "Thomsen", "513123123", "Camilla.gasd@gmail.com", "camilla 421", "7100", "Vejle");
+
 
         customerService.createCustomer(c1);
         customerService.createCustomer(c2);
 
 
         // --- CASES ---
-        Case shoeRack = new Case();
-        shoeRack.setTitle("Entryway Shoe Rack");
-        shoeRack.setDescription("Compact walnut shoe rack with two shelves.");
-        shoeRack.setCreatedAt(LocalDate.now().minusDays(14));
-        shoeRack.setCustomer(c1);
+        Case shoeRack = new Case(
+                1L,
+                "Entryway Shoe Rack",
+                "Compact walnut shoe rack with two shelves.",
+                LocalDate.now().minusDays(14),
+                c1,
+                null
+        );
 
-        Case diningBench = new Case();
-        diningBench.setTitle("Dining Room Bench");
-        diningBench.setDescription("Long spruce bench with clean Scandinavian lines.");
-        diningBench.setCreatedAt(LocalDate.now().minusDays(5));
-        diningBench.setCustomer(c2);
-
-        caseService.createCase(shoeRack.getId(), shoeRack);
-        caseService.createCase(diningBench.getId(), diningBench);
-
+        Case diningBench = new Case(
+                2L,
+                "Dining Room Bench",
+                "Long spruce bench with clean Scandinavian lines.",
+                LocalDate.now().minusDays(5),
+                c2,
+                null
+        );
 
         // --- CASE MATERIALS ---
-        CaseMaterial scm1 = new CaseMaterial();
-        scm1.setDescription("Walnut shelves (cut to size)");
-        scm1.setQuantity(2);
-        scm1.setUnitPrice(975.0);
-        scm1.setMaterial(walnut);
-        scm1.setC(shoeRack);
+        CaseMaterial scm1 = new CaseMaterial(
+                3L,
+                "Walnut shelves (cut to size)",
+                2,
+                975.0,
+                shoeRack,
+                walnut
+                );
 
-        CaseMaterial scm2 = new CaseMaterial();
-        scm2.setDescription("Walnut support rails");
-        scm2.setQuantity(3);
-        scm2.setUnitPrice(975.0);
-        scm2.setMaterial(walnut);
-        scm2.setC(shoeRack);
+        CaseMaterial scm2 = new CaseMaterial(
+                4L,
+                "Walnut support rails",
+                3,
+                975.0,
+                shoeRack,
+                walnut
+                );
 
-        CaseMaterial dcm1 = new CaseMaterial();
-        dcm1.setDescription("Spruce planks for bench seat");
-        dcm1.setQuantity(4);
-        dcm1.setUnitPrice(280.0);
-        dcm1.setMaterial(spruce);
-        dcm1.setC(diningBench);
+        CaseMaterial dcm1 = new CaseMaterial(
+                5L,
+                "Spruce planks for bench seat",
+                4,
+                280.0,
+                diningBench,
+                spruce
+                );
 
-        CaseMaterial dcm2 = new CaseMaterial();
-        dcm2.setDescription("12mm birch plywood for underside supports");
-        dcm2.setQuantity(2);
-        dcm2.setUnitPrice(190.0);
-        dcm2.setMaterial(plywood12);
-        dcm2.setC(diningBench);
+        CaseMaterial dcm2 = new CaseMaterial(
+                6L,
+                "12mm birch plywood for underside supports",
+                2,
+                190.0,
+                diningBench,
+                walnut
+                );
 
         materialService.createMaterial(scm1.getMaterial());
         materialService.createMaterial(scm2.getMaterial());
@@ -138,19 +129,21 @@ public class InitData implements CommandLineRunner {
 
 
         // --- OFFER REQUESTS ---
-        OfferRequest or1 = new OfferRequest();
-        or1.setFirstName("Martin");
-        or1.setLastName("Due");
-        or1.setPhoneNumber("33445522");
-        or1.setEmail("martin.d@example.com");
-        or1.setDescription("Looking for a custom wall-mounted bookshelf in ash wood.");
+        OfferRequest or1 = new OfferRequest(
+                "Martin",
+                "Due",
+                "33445522",
+                "martin.d@example.com",
+                "Looking for a custom wall-mounted bookshelf in ash wood."
+        );
 
-        OfferRequest or2 = new OfferRequest();
-        or2.setFirstName("Kristina");
-        or2.setLastName("Ravn");
-        or2.setPhoneNumber("60607788");
-        or2.setEmail("kristina.r@example.com");
-        or2.setDescription("Request for a built-in wardrobe, white painted finish.");
+        OfferRequest or2 = new OfferRequest(
+                "Kristina",
+                "Ravn",
+                "60607788",
+                "kristina.r@example.com",
+                "Request for a built-in wardrobe, white painted finish."
+        );
 
         offerRequestService.createOfferRequest(or1);
         offerRequestService.createOfferRequest(or2);
