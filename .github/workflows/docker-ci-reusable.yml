@@ -9,39 +9,14 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Test container
         run: |
-          # Start containers
+          # Run the container in detached mode
           docker compose up -d
-
-          # Wait for MySQL first (optional but safer)
-          echo "Waiting for MySQL..."
-          timeout=60
-          while ! docker exec eksamens-projekt-bcraft-db-1 mysqladmin ping -h localhost -u dingdong -p1234 --silent; do
-            sleep 2
-            ((timeout--))
-            if [ $timeout -le 0 ]; then
-              echo "MySQL did not start in time"
-              docker logs eksamens-projekt-bcraft-db-1
-              exit 1
-            fi
-          done
-          echo "MySQL is ready!"
-
-          # Wait for Spring Boot app
-          echo "Waiting for Spring Boot app..."
-          timeout=60
-          while ! curl -s http://127.0.0.1:8080/actuator/health >/dev/null 2>&1; do
-            sleep 2
-            ((timeout--))
-            if [ $timeout -le 0 ]; then
-              echo "Spring Boot app did not start in time"
-              docker logs eksamens-projekt-bcraft-app-1
-              exit 1
-            fi
-          done
-          echo "Spring Boot app is ready!"
-
+          
+          # Wait for a few seconds to ensure the container is up and running
+          sleep 100
+          
           # Test the application endpoint
-          curl -f http://127.0.0.1:8080/actuator/health
-
-          # Stop and remove containers
+          curl -f http://localhost:8080/actuator/health || exit 1
+          
+          # Stop and remove the container.
           docker compose down
