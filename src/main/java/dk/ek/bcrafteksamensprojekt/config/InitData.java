@@ -31,8 +31,8 @@ public class InitData implements CommandLineRunner {
         u2.setFirstName("Sofie");
         u2.setLastName("Nørgaard");
 
-        userAuthenticationService.saveUser(u1);
-        userAuthenticationService.saveUser(u2);
+        userAuthenticationService.createUser(u1.getUsername(), u1.getPassword());
+        userAuthenticationService.createUser(u2.getUsername(), u2.getPassword());
 
 
         // --- MATERIALS ---
@@ -51,9 +51,9 @@ public class InitData implements CommandLineRunner {
         plywood12.setPricePerUnit(190.0);
         plywood12.setUnit("m²");
 
-        materialService.saveMaterial(walnut);
-        materialService.saveMaterial(spruce);
-        materialService.saveMaterial(plywood12);
+        materialService.createMaterial(walnut);
+        materialService.createMaterial(spruce);
+        materialService.createMaterial(plywood12);
 
 
         // --- CUSTOMERS ---
@@ -75,8 +75,8 @@ public class InitData implements CommandLineRunner {
         c2.setZipCode("5000");
         c2.setCity("Odense");
 
-        customerService.saveCustomer(c1);
-        customerService.saveCustomer(c2);
+        customerService.createCustomer(c1);
+        customerService.createCustomer(c2);
 
 
         // --- CASES ---
@@ -92,8 +92,8 @@ public class InitData implements CommandLineRunner {
         diningBench.setCreatedAt(LocalDate.now().minusDays(5));
         diningBench.setCustomer(c2);
 
-        caseService.saveCase(shoeRack);
-        caseService.saveCase(diningBench);
+        caseService.createCase(shoeRack.getId(), shoeRack);
+        caseService.createCase(diningBench.getId(), diningBench);
 
 
         // --- CASE MATERIALS ---
@@ -125,16 +125,16 @@ public class InitData implements CommandLineRunner {
         dcm2.setMaterial(plywood12);
         dcm2.setC(diningBench);
 
-        caseService.saveCaseMaterial(scm1);
-        caseService.saveCaseMaterial(scm2);
-        caseService.saveCaseMaterial(dcm1);
-        caseService.saveCaseMaterial(dcm2);
+        materialService.createMaterial(scm1.getMaterial());
+        materialService.createMaterial(scm2.getMaterial());
+        materialService.createMaterial(dcm1.getMaterial());
+        materialService.createMaterial(dcm2.getMaterial());
 
         shoeRack.setCaseMaterials(List.of(scm1, scm2));
         diningBench.setCaseMaterials(List.of(dcm1, dcm2));
 
-        caseService.saveCase(shoeRack);
-        caseService.saveCase(diningBench);
+        caseService.createCase(shoeRack.getId(), shoeRack);
+        caseService.createCase(diningBench.getId(), diningBench);
 
 
         // --- OFFER REQUESTS ---
@@ -152,7 +152,7 @@ public class InitData implements CommandLineRunner {
         or2.setEmail("kristina.r@example.com");
         or2.setDescription("Request for a built-in wardrobe, white painted finish.");
 
-        offerRequestService.saveOfferRequest(or1);
-        offerRequestService.saveOfferRequest(or2);
+        offerRequestService.createOfferRequest(or1);
+        offerRequestService.createOfferRequest(or2);
     }
 }

@@ -52,7 +52,5 @@ public class OfferRequestService {
         offerRequestRepository.delete(existing);
     }
 
-    public OfferRequest saveOfferRequest(OfferRequest offerRequest) {
-        return offerRequestRepository.save(offerRequest);
-    }
+
 }

@@ -27,13 +27,6 @@ public class CaseService {
         return caseRepository.save(c);
     }
 
-    public Case saveCase(Case c){
-        return caseRepository.save(c);
-    }
-
-    public CaseMaterial saveCaseMaterial(CaseMaterial c){
-        return caseMaterialRepository.save(c);
-    }
 
     public Case updateCase(Long id, Case updated) {
         Case existing = caseRepository.findById(id)

@@ -18,9 +18,7 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    public Customer saveCustomer(Customer customer){
-        return customerRepository.save(customer);
-    }
+
 
     public Customer updateCustomer(Long id, Customer updated){
         Customer existing = customerRepository.findById(id)
