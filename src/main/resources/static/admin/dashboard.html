@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8" />
+    <title>Dashboard – Admin</title>
+    <link rel="stylesheet" href="../css/admin.css" >
+</head>
+<body>
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <h2 class="logo">B-Craft</h2>
+        <nav>
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="customers.html">Kunder</a>
+            <a href="cases.html">Sager</a>
+            <a href="materials.html">Materialer</a>
+            <a href="../index.html" class="logout">Til hjemmesiden →</a>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <header class="topbar">
+            <h1>Dashboard</h1>
+        </header>
+
+        <section class="stats">
+            <div class="stat-card" id="customersCount">Kunder: ...</div>
+            <div class="stat-card" id="casesCount">Sager: ...</div>
+            <div class="stat-card" id="materialsCount">Materialer: ...</div>
+        </section>
+
+        <section class="latest">
+            <h2>Seneste sager</h2>
+            <div id="latestCases" class="latest-container"></div>
+        </section>
+    </main>
+
+</div>
+
+<script src="/js/admin-dashboard.js"></script>
+</body>
+</html>

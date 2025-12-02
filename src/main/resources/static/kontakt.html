@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>Kontakt os – B-Craft</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">B-Craft</div>
+    <nav>
+        <a href="index.html">Forside</a>
+        <a href="ydelser.html">Ydelser</a>
+        <a href="portefolje.html">Portefølje</a>
+        <a href="om-os.html">Om os</a>
+        <a href="kontakt.html">Kontakt</a>
+    </nav>
+</header>
+
+<section class="contact-container">
+
+    <form id="contactForm">
+        <h2>Kontakt os</h2>
+        <textarea placeholder="Har du en drøm om… skriv til os" required></textarea>
+
+        <div class="grid-2">
+            <input type="text" placeholder="Fulde navn" id="firstName" required>
+            <input type="text" placeholder="Telefonnr" id="phone" required>
+            <input type="text" placeholder="Adresse" id="lastName" required>
+            <input type="email" placeholder="Email" id="email" required>
+        </div>
+
+        <textarea placeholder="Besked" id="description" required></textarea>
+
+        <button type="submit" class="btn">Send</button>
+    </form>
+
+    <div class="contact-info">
+        Her kommer billede, tekst eller kort
+    </div>
+
+</section>
+
+<script src="js/contact.js"></script>
+</body>
+</html>

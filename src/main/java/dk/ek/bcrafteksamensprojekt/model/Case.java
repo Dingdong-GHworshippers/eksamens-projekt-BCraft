@@ -3,17 +3,19 @@ package dk.ek.bcrafteksamensprojekt.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table (name = "cases")
+@Table(name = "cases")
 @Getter
 @Setter
 public class Case {
-    @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
@@ -21,13 +23,15 @@ public class Case {
     private LocalDate createdAt = LocalDate.now();
 
     @ManyToOne
+    @JsonIgnoreProperties("cases")
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @OneToMany(mappedBy = "c", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CaseMaterial> caseMaterials = new ArrayList<>();
 
-    public Case(Long id, String title, String description, LocalDate createdAt, Customer customer, List<CaseMaterial> caseMaterials) {
+    public Case(Long id, String title, String description, LocalDate createdAt,
+                Customer customer, List<CaseMaterial> caseMaterials) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -38,18 +42,15 @@ public class Case {
 
     public Case() {}
 
-    // Sets the case on the caseMaterial and then adds the material to the caseMaterial-list
     public void addCaseMaterial(CaseMaterial caseMaterial) {
         if (caseMaterial == null) return;
         caseMaterial.setC(this);
         this.caseMaterials.add(caseMaterial);
     }
 
-    // Removes the case on the caseMaterial and then removes the material from the caseMaterial-list
     public void removeCaseMaterial(CaseMaterial caseMaterial) {
         if (caseMaterial == null) return;
         caseMaterial.setC(null);
         this.caseMaterials.remove(caseMaterial);
     }
-
 }
