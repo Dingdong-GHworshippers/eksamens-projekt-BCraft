@@ -4,10 +4,8 @@ import dk.ek.bcrafteksamensprojekt.exceptions.NotFoundException;
 import dk.ek.bcrafteksamensprojekt.model.Case;
 import dk.ek.bcrafteksamensprojekt.model.CaseMaterial;
 import dk.ek.bcrafteksamensprojekt.model.Customer;
-import dk.ek.bcrafteksamensprojekt.repository.CaseMaterialRepository;
-import dk.ek.bcrafteksamensprojekt.repository.CaseRepository;
-import dk.ek.bcrafteksamensprojekt.repository.CustomerRepository;
-import dk.ek.bcrafteksamensprojekt.repository.MaterialRepository;
+import dk.ek.bcrafteksamensprojekt.model.OfferRequest;
+import dk.ek.bcrafteksamensprojekt.repository.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +24,7 @@ public class CaseServiceTest {
     private CustomerRepository customerRepository;
     private MaterialRepository materialRepository;
     private CaseMaterialRepository caseMaterialRepository;
+    private OfferRequestRepository offerRequestRepository;
 
     private CaseService caseService;
 
@@ -33,15 +32,17 @@ public class CaseServiceTest {
     void setUp() {
         caseRepository = mock(CaseRepository.class);
         customerRepository = mock(CustomerRepository.class);
-        materialRepository = mock(MaterialRepository.class);
         caseMaterialRepository = mock(CaseMaterialRepository.class);
+        offerRequestRepository = mock(OfferRequestRepository.class);
+
+
 
         caseService = new CaseService(
                 caseRepository,
                 customerRepository,
-                materialRepository,
-                caseMaterialRepository
-        );
+                caseMaterialRepository,
+                offerRequestRepository
+                );
     }
 
     // ---------- createCase ----------
