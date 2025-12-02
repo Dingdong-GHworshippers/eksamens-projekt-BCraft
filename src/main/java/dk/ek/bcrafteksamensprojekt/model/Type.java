@@ -23,11 +23,12 @@ public enum Type {
     }
 
     public static Type fromString(String value) {
-        for (Type role : Type.values()) {
-            if (role.prettyprint.equalsIgnoreCase(value)) {
-                return role;
+        for (Type t : Type.values()) {
+            if (t.prettyprint.equalsIgnoreCase(value) || t.name().equalsIgnoreCase(value)) {
+                return t;
             }
         }
-        return null;
+        throw new IllegalArgumentException("Unknown type: " + value);
     }
+
 }

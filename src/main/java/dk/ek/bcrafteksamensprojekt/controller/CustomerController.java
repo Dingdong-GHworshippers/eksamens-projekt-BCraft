@@ -3,7 +3,7 @@ package dk.ek.bcrafteksamensprojekt.controller;
 
 import dk.ek.bcrafteksamensprojekt.dto.CustomerRequestDto;
 import dk.ek.bcrafteksamensprojekt.model.Customer;
-import dk.ek.bcrafteksamensprojekt.dto.Mapper;
+import dk.ek.bcrafteksamensprojekt.dto.CustomerMapper;
 import dk.ek.bcrafteksamensprojekt.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerController {
     private final CustomerService customerService;
-    private final Mapper mapper;
+    private final CustomerMapper customerMapper;
 
 
     //returns all customers
@@ -41,7 +41,7 @@ public class CustomerController {
     // creates a new customer
     @PostMapping
     public ResponseEntity<Customer> createCustomer(@RequestBody CustomerRequestDto customerRequestDto) {
-        Customer customer = mapper.customerRequestDtoToCustomer(customerRequestDto);
+        Customer customer = customerMapper.customerRequestDtoToCustomer(customerRequestDto);
 
         Customer savedCustomer = customerService.createCustomer(customer);
 
