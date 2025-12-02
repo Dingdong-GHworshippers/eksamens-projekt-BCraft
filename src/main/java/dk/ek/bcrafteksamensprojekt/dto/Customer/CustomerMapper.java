@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomerMapper {
 
-    public Customer toEntity(CustomerRequestDto dto) {
+    public Customer toEntity(CustomerRequestDTO dto) {
         Customer c = new Customer();
         c.setFirstName(dto.firstName());
         c.setLastName(dto.lastName());
@@ -19,8 +19,8 @@ public class CustomerMapper {
         return c;
     }
 
-    public CustomerResponseDto toDto(Customer c) {
-        return new CustomerResponseDto(
+    public CustomerResponseDTO toDto(Customer c) {
+        return new CustomerResponseDTO(
                 c.getId(),
                 c.getFirstName(),
                 c.getLastName(),

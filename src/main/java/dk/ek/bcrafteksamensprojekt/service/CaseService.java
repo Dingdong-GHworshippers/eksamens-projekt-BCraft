@@ -56,7 +56,7 @@ public class CaseService {
 
         c.setTitle(dto.title());
         c.setDescription(dto.description());
-        c.setType(Type.fromString(dto.type()));
+        c.setType(dto.type());
 
         caseRepository.save(c);
 

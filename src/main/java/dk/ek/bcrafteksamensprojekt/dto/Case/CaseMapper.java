@@ -15,7 +15,7 @@ public class CaseMapper {
         Case c = new Case();
         c.setTitle(dto.title());
         c.setDescription(dto.description());
-        c.setType(Type.valueOf(dto.type()));
+        c.setType(dto.type());
         c.setCustomer(customer);
         return c;
     }
@@ -30,7 +30,7 @@ public class CaseMapper {
                 c.getTitle(),
                 c.getDescription(),
                 c.getCreatedAt(),
-                c.getType().toString(),
+                c.getType(),
                 c.getCustomer().getId(),
                 materials
         );

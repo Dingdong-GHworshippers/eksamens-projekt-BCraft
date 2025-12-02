@@ -14,7 +14,7 @@ public class OfferRequestMapper {
         o.setEmail(dto.email());
         o.setPhoneNumber(dto.phoneNumber());
         o.setDescription(dto.description());
-        o.setType(Type.fromString(dto.type()));
+        o.setType(dto.type());
 
         return o;
     }
@@ -27,7 +27,7 @@ public class OfferRequestMapper {
                 e.getPhoneNumber(),
                 e.getEmail(),
                 e.getDescription(),
-                e.getType().toString()
+                e.getType()
         );
     }
 }

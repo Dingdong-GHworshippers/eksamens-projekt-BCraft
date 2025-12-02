@@ -1,8 +1,8 @@
 package dk.ek.bcrafteksamensprojekt.controller;
 
 
-import dk.ek.bcrafteksamensprojekt.dto.Customer.CustomerRequestDto;
-import dk.ek.bcrafteksamensprojekt.dto.Customer.CustomerResponseDto;
+import dk.ek.bcrafteksamensprojekt.dto.Customer.CustomerRequestDTO;
+import dk.ek.bcrafteksamensprojekt.dto.Customer.CustomerResponseDTO;
 import dk.ek.bcrafteksamensprojekt.dto.Customer.CustomerMapper;
 import dk.ek.bcrafteksamensprojekt.service.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -22,27 +22,27 @@ public class CustomerController {
 
     //returns all customers
     @GetMapping
-    public ResponseEntity<List<CustomerResponseDto>> getAll() {
+    public ResponseEntity<List<CustomerResponseDTO>> getAll() {
         return ResponseEntity.ok(customerService.findAllCustomers());
     }
 
 
     // Returns customer by id
     @GetMapping("/{id}")
-    public ResponseEntity<CustomerResponseDto> getById(@PathVariable Long id) {
+    public ResponseEntity<CustomerResponseDTO> getById(@PathVariable Long id) {
         return ResponseEntity.ok(customerService.findById(id));
     }
 
 
     // creates a new customer
     @PostMapping
-    public ResponseEntity<CustomerResponseDto> create(@RequestBody CustomerRequestDto dto) {
+    public ResponseEntity<CustomerResponseDTO> create(@RequestBody CustomerRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(customerService.createCustomer(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerResponseDto> update(@PathVariable Long id, @RequestBody CustomerRequestDto dto) {
+    public ResponseEntity<CustomerResponseDTO> update(@PathVariable Long id, @RequestBody CustomerRequestDTO dto) {
         return ResponseEntity.ok(customerService.updateCustomer(id, dto));
     }
 

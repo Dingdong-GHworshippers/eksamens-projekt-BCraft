@@ -1,8 +1,8 @@
 package dk.ek.bcrafteksamensprojekt.service;
 
 import dk.ek.bcrafteksamensprojekt.dto.Customer.CustomerMapper;
-import dk.ek.bcrafteksamensprojekt.dto.Customer.CustomerRequestDto;
-import dk.ek.bcrafteksamensprojekt.dto.Customer.CustomerResponseDto;
+import dk.ek.bcrafteksamensprojekt.dto.Customer.CustomerRequestDTO;
+import dk.ek.bcrafteksamensprojekt.dto.Customer.CustomerResponseDTO;
 import dk.ek.bcrafteksamensprojekt.exceptions.NotFoundException;
 import dk.ek.bcrafteksamensprojekt.model.Customer;
 import dk.ek.bcrafteksamensprojekt.repository.CustomerRepository;
@@ -18,7 +18,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
 
-    public CustomerResponseDto createCustomer(CustomerRequestDto dto) {
+    public CustomerResponseDTO createCustomer(CustomerRequestDTO dto) {
         Customer customer = customerMapper.toEntity(dto);
         customerRepository.save(customer);
         return customerMapper.toDto(customer);
@@ -26,7 +26,7 @@ public class CustomerService {
 
 
 
-    public CustomerResponseDto updateCustomer(Long id, CustomerRequestDto dto) {
+    public CustomerResponseDTO updateCustomer(Long id, CustomerRequestDTO dto) {
         Customer existing = customerRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Customer not found: " + id));
 
@@ -44,7 +44,7 @@ public class CustomerService {
     }
 
     // Returns custom NotFoundException
-    public CustomerResponseDto findById(Long id) {
+    public CustomerResponseDTO findById(Long id) {
         Customer c = customerRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Customer not found: " + id));
 
@@ -58,7 +58,7 @@ public class CustomerService {
                 .collect(Collectors.toList());
     }
 
-    public List<CustomerResponseDto> findAllCustomers() {
+    public List<CustomerResponseDTO> findAllCustomers() {
         return customerRepository.findAll().stream()
                 .map(customerMapper::toDto)
                 .toList();
