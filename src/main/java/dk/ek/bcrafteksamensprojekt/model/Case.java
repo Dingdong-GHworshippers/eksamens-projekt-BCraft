@@ -27,6 +27,9 @@ public class Case {
     @OneToMany(mappedBy = "c", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CaseMaterial> caseMaterials = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    private Type type;
+
     public Case(Long id, String title, String description, LocalDate createdAt, Customer customer, List<CaseMaterial> caseMaterials) {
         this.id = id;
         this.title = title;

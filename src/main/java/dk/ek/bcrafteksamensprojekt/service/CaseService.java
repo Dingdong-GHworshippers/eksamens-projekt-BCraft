@@ -4,10 +4,8 @@ import dk.ek.bcrafteksamensprojekt.exceptions.NotFoundException;
 import dk.ek.bcrafteksamensprojekt.model.Case;
 import dk.ek.bcrafteksamensprojekt.model.CaseMaterial;
 import dk.ek.bcrafteksamensprojekt.model.Customer;
-import dk.ek.bcrafteksamensprojekt.repository.CaseMaterialRepository;
-import dk.ek.bcrafteksamensprojekt.repository.CaseRepository;
-import dk.ek.bcrafteksamensprojekt.repository.CustomerRepository;
-import dk.ek.bcrafteksamensprojekt.repository.MaterialRepository;
+import dk.ek.bcrafteksamensprojekt.model.OfferRequest;
+import dk.ek.bcrafteksamensprojekt.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +17,26 @@ import java.util.List;
 public class CaseService {
     private final CaseRepository caseRepository;
     private final CustomerRepository customerRepository;
-    private final MaterialRepository materialRepository;
     private final CaseMaterialRepository caseMaterialRepository;
+    private final OfferRequestRepository offerRequestRepository;
 
     public Case createCase(Long customerId, Case c){
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new NotFoundException("Kunde ikke fundet med id "+customerId));
         c.setCustomer(customer);
+        return caseRepository.save(c);
+    }
+
+    public Case createCaseFromOfferRequest(Long offerRequestId) {
+
+        OfferRequest offerRequest = offerRequestRepository.findById(offerRequestId)
+                .orElseThrow(() -> new NotFoundException("Offer Request not found"));
+
+        Case c = new Case();
+        c.setTitle("Sag for " + offerRequest.getFirstName());
+        c.setDescription(offerRequest.getDescription());
+        c.setType(offerRequest.getType());
+
         return caseRepository.save(c);
     }
 
