@@ -19,6 +19,9 @@ public class OfferRequest {
     private String phoneNumber;
     private String email;
 
+    @Enumerated(EnumType.STRING)
+    private Type type;
+
     private String description;
 
     public OfferRequest(Long id, String firstName, String lastName, String phoneNumber, String email, String description) {

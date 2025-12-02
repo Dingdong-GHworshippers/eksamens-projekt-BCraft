@@ -1,9 +1,9 @@
 package dk.ek.bcrafteksamensprojekt.controller;
 
 
-import dk.ek.bcrafteksamensprojekt.dto.CustomerRequestDto;
-import dk.ek.bcrafteksamensprojekt.model.Customer;
-import dk.ek.bcrafteksamensprojekt.dto.Mapper;
+import dk.ek.bcrafteksamensprojekt.dto.Customer.CustomerRequestDTO;
+import dk.ek.bcrafteksamensprojekt.dto.Customer.CustomerResponseDTO;
+import dk.ek.bcrafteksamensprojekt.dto.Customer.CustomerMapper;
 import dk.ek.bcrafteksamensprojekt.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,45 +17,39 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerController {
     private final CustomerService customerService;
-    private final Mapper mapper;
+    private final CustomerMapper customerMapper;
 
 
     //returns all customers
     @GetMapping
-    public ResponseEntity<List<Customer>> findAllCustomers() {
-        return ResponseEntity.ok((customerService.findAllCustomers()));
+    public ResponseEntity<List<CustomerResponseDTO>> getAll() {
+        return ResponseEntity.ok(customerService.findAllCustomers());
     }
 
 
     // Returns customer by id
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> findCustomerById(@PathVariable Long id) {
-        Customer customer = customerService.findCustomerById(id);
-        if (customer == null){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(customer);
+    public ResponseEntity<CustomerResponseDTO> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(customerService.findById(id));
     }
 
 
     // creates a new customer
     @PostMapping
-    public ResponseEntity<Customer> createCustomer(@RequestBody CustomerRequestDto customerRequestDto) {
-        Customer customer = mapper.customerRequestDtoToCustomer(customerRequestDto);
+    public ResponseEntity<CustomerResponseDTO> create(@RequestBody CustomerRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(customerService.createCustomer(dto));
+    }
 
-        Customer savedCustomer = customerService.createCustomer(customer);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedCustomer);
-
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerResponseDTO> update(@PathVariable Long id, @RequestBody CustomerRequestDTO dto) {
+        return ResponseEntity.ok(customerService.updateCustomer(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Customer> deleteCustomer(@PathVariable Long id) {
-        if (customerService.findCustomerById(id) == null){
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         customerService.deleteCustomer(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
 
 }
