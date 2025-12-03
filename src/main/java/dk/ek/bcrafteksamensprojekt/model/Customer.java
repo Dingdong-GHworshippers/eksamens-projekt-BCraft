@@ -36,7 +36,7 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Case> cases = new ArrayList<>();
 
-    public Customer(String firstName, String lastName, String number, String mail, String address, String zipCode, String city) {
+    public Customer(String firstName, String lastName, String phoneNumber, String email, String address, String zipCode, String city) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
