@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
 
       - name: Set up Maven
-        uses: s4u/setup-maven-action@v4
+        uses: s4u/setup-maven-action@bf6bdba9032712a36ac2a6649c97fb14eb6c6967
 
       - name: Build JAR
         run: mvn clean package -DskipTests
