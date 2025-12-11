@@ -9,17 +9,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+      - uses: actions/checkout@3df4f47a4ce1c78542c4f35ae6c405c4ea4e4f36
 
       - name: Set up Maven
-        uses: s4u/setup-maven-action@bf6bdba9032712a36ac2a6649c97fb14eb6c6967
+        uses: s4u/setup-maven-action@f792ada9f31b4f4e5db7f091adbe21c3f305a2f0
+        with:
+          java-version: '21'
 
       - name: Build JAR
         run: mvn clean package -DskipTests
 
       - name: Copy JAR to Linode
-        uses: appleboy/scp-action@eb443bd4941c3334ee584c1915fcfa2001e8a86c
+        uses: appleboy/scp-action@c26be5b9698014cc933a9351a092d49b4beba47f
         with:
           host: ${{ secrets.LINODE_IP }}
           username: springapp
@@ -28,8 +29,8 @@ jobs:
           target: "/opt/springapp/app.jar"
           strip_components: 1
 
-      - name: Restart Spring Boot service
-        uses: appleboy/ssh-action@eb443bd4941c3334ee584c1915fcfa2001e8a86c
+      - name: Restart Service
+        uses: appleboy/ssh-action@f26e029bba904a68f69a4f9c2c280c706ad4ad4a
         with:
           host: ${{ secrets.LINODE_IP }}
           username: root
