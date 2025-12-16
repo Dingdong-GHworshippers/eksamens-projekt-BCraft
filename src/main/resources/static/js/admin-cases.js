@@ -176,7 +176,7 @@ async function renderCases(cases) {
             <h3>${c.title}</h3>
             <p>${c.description}</p>
             <p><strong>Status:</strong> ${c.status}</p>
-
+            <p><strong>Type:</strong> ${c.type}</p>
             <div class="case-materials-wrapper">
                 <strong>Materialer:</strong>
                 ${materialsHtml}
@@ -277,6 +277,7 @@ document.getElementById("newCaseBtn").onclick = () => {
     document.getElementById("modalTitle").textContent = "Opret sag";
     document.getElementById("caseTitle").value = "";
     document.getElementById("caseDescription").value = "";
+    document.getElementById("caseType").value="";
     document.getElementById("materialsContainer").innerHTML = "";
 
     modal.classList.remove("hidden");
@@ -294,6 +295,8 @@ async function openEditCase(id) {
     document.getElementById("modalTitle").textContent = "Redigér sag";
     document.getElementById("caseTitle").value = c.title;
     document.getElementById("caseDescription").value = c.description;
+    document.getElementById("caseType").value=c.type;
+
     document.getElementById("caseCustomerSelect").value = c.customerId;
 
     const container = document.getElementById("materialsContainer");
@@ -329,7 +332,7 @@ document.getElementById("saveCaseBtn").onclick = async () => {
         title: document.getElementById("caseTitle").value.trim(),
         description: document.getElementById("caseDescription").value.trim(),
         customerId: Number(document.getElementById("caseCustomerSelect").value),
-        type: "Snedker",
+        type: document.getElementById("caseType").value,
         materials
     };
 
@@ -372,6 +375,24 @@ async function toggleCaseStatus(id, status) {
 
     loadInitialData();
 }
+// -------------------------------------------------
+// AUTH
+// -------------------------------------------------
+
+document.getElementById("logoutBtn").onclick = async () => {
+    try {
+        await fetch("/auth/logout", {
+            method: "POST",
+            credentials: "include"
+        });
+    } catch (e) {
+        console.error("Logout failed", e);
+    }
+
+    // Redirect to homepage / login
+    window.location.href = "/index.html";
+};
+
 
 // -------------------------------------------------
 // EVENTS
