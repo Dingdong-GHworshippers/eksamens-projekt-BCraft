@@ -46,6 +46,16 @@ jobs:
           request_pty: true
           script: |
             set -e
-            sudo systemctl restart springapp
-            sudo systemctl is-active --quiet springapp
-            echo "Spring app is running"
+            sudo systemctl restart springapp --no-block
+            
+            # wait until service is active (max ~60s)
+            for i in {1..30}; do
+              if sudo systemctl is-active --quiet springapp; then
+                echo "Spring app is running"
+                exit 0
+              fi
+              sleep 2
+            done
+            
+            echo "Spring app failed to start"
+            exit 1
