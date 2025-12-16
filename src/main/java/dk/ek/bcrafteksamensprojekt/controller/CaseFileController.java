@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,7 +27,13 @@ public class CaseFileController {
         return fileStorage.storeFile(caseId, file);
     }
 
-    @GetMapping("/files/{fileId}")
+    @GetMapping
+    public List<CaseFileResponseDTO> listFiles(@PathVariable Long caseId) {
+        return fileStorage.listFiles(caseId);
+    }
+
+
+    @GetMapping("/{fileId}")
     public ResponseEntity<Resource> download(@PathVariable Long caseId,
                                              @PathVariable Long fileId) throws IOException {
 
