@@ -1,8 +1,6 @@
 let allCustomers = [];
 let editingCustomerId = null;
 
-const modal = document.getElementById("customerModal");
-
 // -------------------------------------------------
 // HENT KUNDER
 // -------------------------------------------------
@@ -47,8 +45,8 @@ function renderCustomers(customers) {
             <h3>${c.firstName} ${c.lastName}</h3>
             <p><strong>Email:</strong> ${c.email}</p>
             <p><strong>Tlf:</strong> ${c.phoneNumber ?? "-"}</p>
-            <p><strong>Adresse:</strong> ${c.address}</p>
-            <p><strong>${c.zipCode} ${c.city}</strong></p>
+            <p><strong>Adresse:</strong> ${c.address ?? "-"}</p>
+            <p><strong>${c.zipCode ?? ""} ${c.city ?? ""}</strong></p>
 
             <div class="card-actions">
                 <button onclick="openEditCustomer(${c.id})">Redigér</button>
@@ -94,7 +92,7 @@ async function openEditCustomer(id) {
     document.getElementById("lastName").value = c.lastName;
     document.getElementById("email").value = c.email;
     document.getElementById("phone").value = c.phoneNumber ?? "";
-    document.getElementById("address").value = c.address;
+    document.getElementById("address").value = c.address ?? "";
     document.getElementById("zipcode").value = c.zipCode ?? "";
     document.getElementById("city").value = c.city ?? "";
 
@@ -102,17 +100,17 @@ async function openEditCustomer(id) {
 }
 
 // -------------------------------------------------
-// GEM KUNDE (PUT ELLER POST)
+// GEM KUNDE
 // -------------------------------------------------
 document.getElementById("saveCustomerBtn").onclick = async () => {
     const customerObj = {
-        firstName: document.getElementById("firstName").value.trim(),
-        lastName: document.getElementById("lastName").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        phoneNumber: document.getElementById("phone").value.trim(),
-        address: document.getElementById("address").value.trim(),
-        zipCode: document.getElementById("zipcode").value.trim(),
-        city: document.getElementById("city").value.trim()
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        email: document.getElementById("email").value,
+        phoneNumber: document.getElementById("phone").value,
+        address: document.getElementById("address").value,
+        zipCode: document.getElementById("zipcode").value,
+        city: document.getElementById("city").value
     };
 
     const url = editingCustomerId === null
@@ -147,8 +145,9 @@ async function deleteCustomer(id) {
 }
 
 // -------------------------------------------------
-// MODAL LUK
+// MODAL
 // -------------------------------------------------
+const modal = document.getElementById("customerModal");
 document.getElementById("closeModalBtn").onclick = () => {
     modal.classList.add("hidden");
 };
