@@ -32,6 +32,7 @@ public class CaseMapper {
                 c.getCreatedAt(),
                 c.getType(),
                 c.getCustomer().getId(),
+                c.getStatus(),
                 materials
         );
     }
