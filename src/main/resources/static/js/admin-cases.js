@@ -38,47 +38,6 @@ function populateCustomerDropdown() {
     });
 }
 
-// -------------------------------------------------
-// MATERIAL DROPDOWN ROW
-// -------------------------------------------------
-function addMaterialRow(existingMaterial = null) {
-    const row = document.createElement("div");
-    row.className = "material-row";
-
-    // Dropdown
-    const materialSelect = document.createElement("select");
-    materialSelect.className = "material-id";
-
-    allMaterials.forEach(m => {
-        const opt = document.createElement("option");
-        opt.value = m.id;
-        opt.textContent = m.name;
-        materialSelect.appendChild(opt);
-    });
-
-    if (existingMaterial) {
-        materialSelect.value = existingMaterial.materialId;
-    }
-
-    // Mængde input
-    const amountInput = document.createElement("input");
-    amountInput.type = "number";
-    amountInput.placeholder = "Mængde";
-    amountInput.className = "material-amount";
-    amountInput.value = existingMaterial?.quantity ?? "";
-
-    // Fjern-knap
-    const removeBtn = document.createElement("button");
-    removeBtn.className = "secondary";
-    removeBtn.textContent = "X";
-    removeBtn.onclick = () => row.remove();
-
-    row.appendChild(materialSelect);
-    row.appendChild(amountInput);
-    row.appendChild(removeBtn);
-
-    document.getElementById("materialsContainer").appendChild(row);
-}
 
 // knap: tilføj materiale
 document.getElementById("addMaterialBtn").onclick = () => addMaterialRow();
@@ -111,6 +70,7 @@ function triggerUpload(caseId) {
             }
 
             alert("Filen blev uploadet!");
+            loadInitialData();
         } catch (err) {
             alert("Der skete en fejl under upload.");
             console.error(err);
@@ -121,6 +81,17 @@ function triggerUpload(caseId) {
 
     fileInput.click(); // open picker
 }
+
+async function fetchCaseFiles(caseId) {
+    const res = await fetch(`/api/cases/${caseId}/files`, {
+        credentials: "include"
+    });
+
+    if (!res.ok) return [];
+
+    return await res.json();
+}
+
 
 
 // -------------------------------------------------
@@ -149,21 +120,39 @@ function applyFilters() {
 // -------------------------------------------------
 // RENDER SAGER (MED MATERIALER)
 // -------------------------------------------------
-function renderCases(cases) {
+async function renderCases(cases) {
     const list = document.getElementById("caseList");
     list.innerHTML = "";
 
-    cases.forEach(c => {
+    for (const c of cases) {
+
+        // 🔹 FETCH FILES PER CASE
+        const files = await fetchCaseFiles(c.id);
+
+        let filesHtml = "<em>Ingen dokumenter</em>";
+        if (files.length > 0) {
+            filesHtml = "<ul class='case-files'>";
+            files.forEach(f => {
+                filesHtml += `
+                    <li>
+                        <a href="/api/cases/${c.id}/files/${f.id}">
+                            ${f.originalFilename}
+                        </a>
+                        (${(f.fileSize / 1024 / 1024).toFixed(2)} MB)
+                    </li>
+                `;
+            });
+            filesHtml += "</ul>";
+        }
+
+        // 🔹 MATERIALER
         let materialsHtml = "<em>Ingen materialer</em>";
 
         if (c.materials && c.materials.length > 0) {
             materialsHtml = "<ul class='case-materials'>";
 
             c.materials.forEach(cm => {
-                const material = allMaterials.find(
-                    m => m.id === cm.materialId
-                );
-
+                const material = allMaterials.find(m => m.id === cm.materialId);
                 const name = material ? material.name : "Ukendt materiale";
                 const unitPrice = cm.effectiveUnitPrice ?? 0;
                 const total = unitPrice * cm.quantity;
@@ -179,6 +168,7 @@ function renderCases(cases) {
             materialsHtml += "</ul>";
         }
 
+        // 🔹 CARD
         const div = document.createElement("div");
         div.className = "card";
 
@@ -192,20 +182,25 @@ function renderCases(cases) {
                 ${materialsHtml}
             </div>
 
+            <div class="case-files-wrapper">
+                <strong>Dokumenter:</strong>
+                ${filesHtml}
+            </div>
+
             <div class="card-actions">
                 <button onclick="openEditCase(${c.id})">Redigér</button>
                 <button onclick="toggleCaseStatus(${c.id}, '${c.status}')">
                     ${c.status === "OPEN" ? "Luk sag" : "Genåbn sag"}
                 </button>
                 <button class="danger" onclick="deleteCase(${c.id})">Slet</button>
-                <!-- ⭐ NEW: Upload button -->
                 <button onclick="triggerUpload(${c.id})">Upload dokument</button>
             </div>
         `;
 
         list.appendChild(div);
-    });
+    }
 }
+
 
 // -------------------------------------------------
 // MATERIALER – RÆKKE MED PRIS
