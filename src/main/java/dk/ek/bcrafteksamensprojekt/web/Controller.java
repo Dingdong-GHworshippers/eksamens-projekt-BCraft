@@ -61,4 +61,8 @@ public class Controller {
         }
         return "forward:/admin/materials.html";
     }
+    @GetMapping("/offers")
+    public String offers() {
+        return "forward:/admin/offers.html";
+    }
 }

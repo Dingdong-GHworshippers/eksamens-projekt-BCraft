@@ -172,7 +172,7 @@ public class InitData implements CommandLineRunner {
 
         offerRequestService.create(
                 new OfferRequestRequestDTO(
-                        "Martin", "Due", "33445522", "martin.d@example.com",
+                        "Martin", "Due", "33445522", "martin.d@example.com", "7400",
                         "Looking for a custom wall-mounted bookshelf in ash wood.",
                         Type.WOODCRAFT
                 )
@@ -180,7 +180,7 @@ public class InitData implements CommandLineRunner {
 
         offerRequestService.create(
                 new OfferRequestRequestDTO(
-                        "Kristina", "Ravn", "60607788", "kristina.r@example.com",
+                        "Kristina", "Ravn", "60607788", "kristina.r@example.com", "8800",
                         "Request for a built-in wardrobe, white painted finish.",
                         Type.WOODCRAFT
                 )
