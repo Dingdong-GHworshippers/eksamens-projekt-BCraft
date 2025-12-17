@@ -21,8 +21,10 @@
             <a href="cases" class="active">Sager</a>
             <a href="materials">Materialer</a>
             <a href="offers">Forespørgsler</a>
-            <a href="../index.html" class="logout">Til hjemmesiden →</a>
         </nav>
+        <button id="logoutBtn" class="logout">
+            Log ud
+        </button>
     </aside>
 
     <!-- MAIN CONTENT -->
@@ -67,6 +69,16 @@
 
         <label for="caseDescription">Beskrivelse</label>
         <textarea id="caseDescription"></textarea>
+
+        <label for="caseType">Type</label>
+        <select id="caseType">
+            <option value="Køkken">Køkken</option>
+            <option value="Snedker">Snedker</option>
+            <option value="Bad">Bad</option>
+            <option value="Gulve">Gulve</option>
+            <option value="Terrasse">Terrasse</option>
+            <option value="Renovering">Renovering</option>
+        </select>
 
         <!-- KUNDER -->
         <label for="caseCustomerSelect">Kunde</label>

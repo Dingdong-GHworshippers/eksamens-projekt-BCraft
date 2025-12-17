@@ -10,6 +10,7 @@ import dk.ek.bcrafteksamensprojekt.dto.Material.MaterialResponseDTO;
 import dk.ek.bcrafteksamensprojekt.dto.OfferRequest.OfferRequestRequestDTO;
 import dk.ek.bcrafteksamensprojekt.dto.Users.UserRequestDTO;
 import dk.ek.bcrafteksamensprojekt.model.*;
+import dk.ek.bcrafteksamensprojekt.repository.UserRepository;
 import dk.ek.bcrafteksamensprojekt.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -26,12 +27,15 @@ public class InitData implements CommandLineRunner {
     private final CaseService caseService;
     private final OfferRequestService offerRequestService;
     private final UserAuthenticationService userAuthenticationService;
+    private final UserRepository userRepository;
 
 
     @Override
     public void run(String... args) {
 
-        createUsers();
+        createUserIfMissing("demo", "demo", "demo", "demo");
+        createUserIfMissing("sofie", "Sofie", "Nørgaard", "password");
+        createUserIfMissing("John", "John", "Nielsen", "password");
         var materials = createMaterials();
         var customers = createCustomers();
         createCases(customers, materials);
@@ -42,18 +46,19 @@ public class InitData implements CommandLineRunner {
     // USERS
     // --------------------------------------------------------
 
-    private void createUsers() {
-        userAuthenticationService.register(
-                new UserRequestDTO("John", "NielsenEnjoyer3", "John", "Nielsen")
-        );
+    private void createUserIfMissing(
+            String username,
+            String firstName,
+            String lastName,
+            String password
+    ) {
+        if (userRepository.existsByUsername(username)) {
+            return; // ✅ SAFE
+        }
 
-        userAuthenticationService.register(
-                new UserRequestDTO("sofie", "oaklover2", "Sofie", "Nørgaard")
+        UserRequestDTO user = new UserRequestDTO(username, firstName, lastName, password);
 
-        );
-        userAuthenticationService.register(
-                new UserRequestDTO("demo", "demo", "demo", "demo")
-        );
+        userAuthenticationService.register(user);
     }
 
     // --------------------------------------------------------

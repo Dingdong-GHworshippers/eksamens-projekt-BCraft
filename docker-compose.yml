@@ -35,6 +35,9 @@ services:
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+      FILE_UPLOAD_DIR: /var/bcraft/uploads
+    volumes:
+      - /var/bcraft/uploads:/var/bcraft/uploads
 
     ports:
       - "127.0.0.1:8080:8080"
@@ -48,4 +51,4 @@ services:
       retries: 10
       start_period: 25s
 volumes:
-  db_data:
+    db_data:

@@ -1,4 +1,5 @@
-name: deploy-to-linode.yml
+name: Deploy to Linode
+
 on:
   push:
     branches: [ main ]
@@ -8,31 +9,41 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@0ad4b8f20ce3c260fa8ba256d3b9d9c25aaf2a64
+      # 1️⃣ Checkout
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Set up Maven
-        uses: s4u/setup-maven-action@6e0c0e9637cc54a68a392d37899f859e8eab3a50
+      # 2️⃣ Install Java 21 (CRITICAL)
+      - name: Set up Java
+        uses: actions/setup-java@v4
         with:
+          distribution: 'temurin'
           java-version: '21'
+          cache: maven
 
+      # 3️⃣ Build JAR
       - name: Build JAR
         run: mvn clean package -DskipTests
 
+      # 4️⃣ Copy JAR to VM (directory, NOT filename)
       - name: Copy JAR to Linode
-        uses: appleboy/scp-action@c26be5b9698014cc933a9351a092d49b4beba47f
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.LINODE_IP }}
           username: springapp
           key: ${{ secrets.LINODE_SSH_KEY }}
           source: "target/*.jar"
-          target: "/opt/springapp/app.jar"
-          strip_components: 1
+          target: "/opt/springapp/"
+          overwrite: true
 
-      - name: Restart Service
-        uses: appleboy/ssh-action@fe6d8a38d6bf8cc8fb47864e4edf4bb43dd5b6c0
+      # 5️⃣ Restart service
+      - name: Restart Spring Boot service
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.LINODE_IP }}
-          username: root
+          username: springapp
           key: ${{ secrets.LINODE_SSH_KEY }}
+          request_pty: true
           script: |
-            systemctl restart springapp
+            sudo systemctl restart springapp
+            sudo systemctl is-active springapp
