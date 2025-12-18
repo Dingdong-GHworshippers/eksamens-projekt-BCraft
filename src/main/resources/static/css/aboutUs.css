@@ -1,0 +1,97 @@
+.about-section {
+    display: flex;
+    justify-content: center; /* Horizontal centering */
+    align-items: center;     /* Vertical centering */
+    text-align: center;      /* Centers the text lines inside the div */
+    padding: 60px;
+    background-color: #f4f4f4;
+}
+
+.about-content {
+    max-width: 600px;        /* Prevents text from stretching too wide */
+}
+
+.about-us-h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.about-us-p {
+    line-height: 1.6;
+    color: #555;
+}
+
+.reveal {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+
+
+
+.container{
+    position: relative;
+}
+
+
+.project-card {
+    background: #F4EDE4;
+; /* Fallback color so white text is visible without image */
+    height: 220px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: 0.3s ease;
+    background-size: cover;
+    background-position: center;
+
+    /* ADD THESE */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers text vertically */
+    align-items: center;     /* Centers text horizontally */
+    overflow: hidden;        /* Keeps the background-color inside the rounded corners */
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+.text-container {
+    /* Remove 'position: relative' unless you are doing absolute positioning inside */
+    padding: 20px;
+    width: 100%;             /* Ensures background covers the width */
+    height: 100%;            /* Ensures background covers the height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    background: #8B3A3A;
+}
+
+/* Remove or fix these if they are causing overlapping issues */
+.centered {
+    display: none; /* If you aren't using this specifically, it might be interfering */
+}
+
+.about-us-hero {
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    background: #F4EDE4;
+
+}
+
+.about-us-hero-text {
+    position: relative;
+    z-index: 1;
+}
