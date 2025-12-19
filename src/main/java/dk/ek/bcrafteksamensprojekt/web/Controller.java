@@ -15,14 +15,49 @@ public class Controller {
         return "forward:/index.html";
     }
 
-    @GetMapping("/kontakt")
+    @GetMapping("/aboutUs")
     public String contactPage(){
-        return "forward:/kontakt.html";
+        return "forward:/aboutUs.html";
     }
 
-    @GetMapping("/ydelser")
-    public String servicesPage(){
-        return "forward:/ydelser.html";
+    @GetMapping("/træprojekter")
+    public String woodcraftPage(){
+        return "forward:/woodcraft.html";
+    }
+
+    @GetMapping("/gulve")
+    public String floorPage(){
+        return "forward:/flooring.html";
+    }
+
+    @GetMapping("/renovering")
+    public String renovationPage(){
+        return "forward:/renovation.html";
+    }
+
+    @GetMapping("/bad")
+    public String bathroomPage(){
+        return "forward:/bathroom.html";
+    }
+
+    @GetMapping("/køkken")
+    public String kitchenPage(){
+        return "forward:/kitchen.html";
+    }
+
+    @GetMapping("/udendørsprojekter")
+    public String outdoorPage(){
+        return "forward:/outside.html";
+    }
+
+    @GetMapping("/portefølje")
+    public String folioPage(){
+        return "forward:/portfolio.html";
+    }
+
+    @GetMapping("/tilbud")
+    public String offerPage(){
+        return "forward:/offer-request.html";
     }
 
     @GetMapping("/login")

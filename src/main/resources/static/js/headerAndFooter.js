@@ -3,24 +3,27 @@ class AppHeader extends HTMLElement {
         this.innerHTML = `
       <header>
       <div class="logo">
-         <a href="index.html">B-Craft</a>
-      </div>
+            <a href="/" class="logo-link">
+                <img src="/img/logoo.png" alt="B-Craft logo" class="logo-img">
+                <span class="logo-text">B-Craft</span>
+            </a>
+        </div>
         <nav>
-            <a href="index.html">Forside</a>
+            <a href="/">Forside</a>
             <div class="dropdown">
                 <span class="dropbtn">Ydelser ▾</span>
                 <div class="dropdown-content">
-                    <a href="kitchen.html">Køkken</a>
-                    <a href="bathroom.html">Bad</a>
-                    <a href="flooring.html">Gulve</a>
-                    <a href="outside.html">Terrasse</a>
-                    <a href="renovation.html">Renovering</a>
-                    <a href="woodcraft.html">Snedker</a>
+                    <a href="/køkken">Køkken</a>
+                    <a href="/bad">Bad</a>
+                    <a href="/gulve">Gulve</a>
+                    <a href="/udendørsprojekter">Terrasse</a>
+                    <a href="/renovering">Renovering</a>
+                    <a href="/træprojekter">Snedker</a>
                 </div>
             </div>
-            <a href="portfolio.html">Portefølje</a>
-            <a href="aboutUs.html">Om os</a>
-            <a href="offer-request.html" class="btn">Få et tilbud</a>
+            <a href="/portefølje">Portefølje</a>
+            <a href="/aboutUs">Om os</a>
+            <a href="/tilbud" class="btn">Få et tilbud</a>
             
         </nav>
       </header>
