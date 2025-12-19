@@ -120,7 +120,8 @@ body {
 /* === LISTS === */
 #customerList,
 #caseList,
-#materialsList {
+#materialList,
+#offerList{
     display: grid;
     gap: 20px;
 }
